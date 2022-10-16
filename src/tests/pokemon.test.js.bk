@@ -1,0 +1,30 @@
+const request = require('supertest')
+const api = require('../../index')
+
+describe('API Pokemon', () =>{
+  it("there are returned as json", async () => {
+    await request(api)
+      .get('/pokemon/no-pokemon')
+      .expect('Content-Type', /application\/json/)
+  })  
+  it("there are an error message when none found a Pokemon", async () => {
+    await request(api)
+      .get('/pokemon/no-pokemon')
+      .expect(404)
+  }) 
+  it("there are one pokemon", async () => {
+    const name = 'charizard'
+    const response = await request(api).get(`/pokemon/${name}`)
+    expect(response.body.id).toBe(6)
+  })  
+  it("there are moves by pokemon", async () => {
+    const name = 'charizard'
+    const response = await request(api).get(`/pokemon/${name}`)
+    expect(response.body.moves.length).toBeGreaterThan(1)
+  })  
+  it("there are power on moves by pokemon", async () => {
+    const name = 'charizard'
+    const response = await request(api).get(`/pokemon/${name}`)
+    expect(response.body.moves[0]).toHaveProperty('power')
+  })  
+})
