@@ -28,7 +28,6 @@ const swaggerSpec = {
   apis: [`${path.join(__dirname, './src/routes/*.js')}`]
 }
 
-
 app.use('/', stravaRouter)
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)))
 

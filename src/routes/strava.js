@@ -25,6 +25,12 @@ const checkCache = (req, res, next) => {
 //   maxConcurrent: 10
 // })
 
+router.get('/test', checkCache, async (req, res) => {
+  return res.status(200).json({
+    message: 'I am alive'
+  })
+})
+
 router.get('/athlete/:id', checkCache, async (req, res) => {
   try {
     const { id } = req.params
