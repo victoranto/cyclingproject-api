@@ -28,22 +28,18 @@ const checkCache = (req, res, next) => {
 //   maxConcurrent: 10
 // })
 
-const main = async () => {
-  const { data, error } = await supabase.from('users').select('*')
-
-  if (error) {
-    console.error(error)
-    return
-  }
-  console.log(data)
-}
 
 router.get('/test', checkCache, async (req, res) => {
-  main()
-
-  return res.status(200).json({
-    message: 'I am alive'
-  })
+  try {
+    const { data, error } = await supabase.from('users').select('*')
+    if (data) {
+      return res.status(200).json(data)
+    }
+  } catch (error) {
+    return res.status(400).json({
+      message: 'error.response.statusText'
+    })
+  }
 })
 
 router.get('/athlete/:id', checkCache, async (req, res) => {
