@@ -7,6 +7,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 const stravaRouter = require('./src/routes/strava')
+const appRouter = require('./src/routes/app')
 
 const swaggerUI = require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
@@ -29,6 +30,7 @@ const swaggerSpec = {
 }
 
 app.use('/', stravaRouter)
+app.use('/app/', appRouter)
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)))
 
 app.listen(PORT, () => {
